@@ -1,0 +1,10 @@
+<section class="row">
+<form action="/action_page.php">
+  <label >Check Url:</label>
+  <input type="url" id="url" name="URL">
+  <input type="submit" value="Submit">
+</form>
+</section>
+
+<section class="row">
+</section>
