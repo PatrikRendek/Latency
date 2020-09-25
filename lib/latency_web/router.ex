@@ -15,10 +15,9 @@ defmodule LatencyWeb.Router do
 
   scope "/", LatencyWeb do
     pipe_through :browser
-
     get "/", PageController, :index
+    get "/check_response",PageController, :check_response
   end
-
   # Other scopes may use custom stacks.
   # scope "/api", LatencyWeb do
   #   pipe_through :api
