@@ -20,7 +20,6 @@ defmodule LatencyWeb.PageController do
     status = response_json.status_code
     latency = end_ms - start_ms
     changeset= Response.changeset(%Response{}, %{latency: latency, status: status,url: url, time: time_now,})
-    IO.inspect changeset.changes.latency
     case Repo.insert(changeset) do
       {:ok, changeset} ->
         json(conn,%{latency: latency, status: status,url: url, time: time_now,})

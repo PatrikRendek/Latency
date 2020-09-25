@@ -1,24 +1,67 @@
 <section class="row">
-<form method="post" action="/url=">
+<form id="form_url">
   <label >Check Url:</label>
-  <input type="url" id="url" name="URL">
-  <input type="submit" value="Submit">
+  <input id="input_url" type="url" id="url" name="URL">
+  <button id="button_url" type="button" onclick="button_click()">Submit</button>
 </form>
 </section>
-<%= @url %>
 <section>
-<table>
+<table id="table_result">
   <tr>
     <th>Url</th>
     <th>Latency</th>
     <th>Status</th>
     <th>Time</th>
   </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
 </table>
 </section>
+<script>
+url_from_query=getParameterByName("url");
+if (url_from_query != null) run(url_from_query);
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+function addDataFromUrl(url) {
+    var xmlHttp = new XMLHttpRequest();    
+    console.log("check_response?url=" + String(url));
+    xmlHttp.open( "GET", "check_response?url=" + String(url), false ); // false for synchronous request
+    xmlHttp.send( null );
+    console.log(xmlHttp.responseText);
+    addToTable(xmlHttp.responseText);
+    return xmlHttp.responseText;
+}
+
+function run(url){
+    clearInterval(timer) ;
+    var timer = setInterval(addDataFromUrl.bind(null,url),5000);   
+}
+
+function button_click() {
+url=document.getElementById("input_url").value;
+ run(url)
+}
+function addToTable(json) {
+  var data = JSON.parse(json);
+  var table = document.getElementById("table_result");
+  var row = table.insertRow(1);
+  var url_cell= row.insertCell(0);
+  var latency_cell = row.insertCell(1);
+  var status_cell = row.insertCell(2);
+  var time_cell = row.insertCell(3);
+  url_cell.innerHTML = data.url;
+  latency_cell.innerHTML = data.latency;
+  status_cell.innerHTML = data.status;
+  var finalTime=data.time.split("T");
+  var finalTime=finalTime[1].split(".");
+  time_cell.innerHTML = finalTime[0];
+}
+
+
+</script>
