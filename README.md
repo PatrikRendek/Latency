@@ -1,5 +1,7 @@
 # Latency
 
+Simple app for testing latency for specified urls.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
