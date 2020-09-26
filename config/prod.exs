@@ -24,7 +24,7 @@ config :hello, Hello.Repo,
   adapter: Ecto.Adapters.Postgres,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true,
-  url: System.get_env("HEROKU_POSTGRESQL_BLUE_URL")
+  url: "postgres://dvhvkrxongzygc:48ecb6d5c2322842aa1f979e92a6a89fa5a74afc61239751b15cd1482bd0f33e@ec2-54-246-87-132.eu-west-1.compute.amazonaws.com:5432/d24vrv7hmujaga"
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
