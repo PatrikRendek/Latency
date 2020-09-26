@@ -16,37 +16,44 @@
 </table>
 </section>
 <script>
+//get parameter url from query
 url_from_query=getParameterByName("url");
 if (url_from_query != null) run(url_from_query);
+
+//function for getting a parameter from query
 function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+  results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
-
+//Send get request,then fill table from response data
 function addDataFromUrl(url) {
-    var xmlHttp = new XMLHttpRequest();    
-    console.log("check_response?url=" + String(url));
-    xmlHttp.open( "GET", "check_response?url=" + String(url), false ); // false for synchronous request
-    xmlHttp.send( null );
-    console.log(xmlHttp.responseText);
-    addToTable(xmlHttp.responseText);
-    return xmlHttp.responseText;
+  var xmlHttp = new XMLHttpRequest();    
+  console.log("check_response?url=" + String(url));
+  xmlHttp.open( "GET", "check_response?url=" + String(url), false ); // false for synchronous request
+  xmlHttp.send( null );
+  console.log(xmlHttp.responseText);
+  addToTable(xmlHttp.responseText);
+  return xmlHttp.responseText;
 }
 
+//run method addDataFromUrl in 5 second loop
 function run(url){
-    clearInterval(timer) ;
-    var timer = setInterval(addDataFromUrl.bind(null,url),5000);   
+  addDataFromUrl(url);
+  clearInterval(timer) ;
+  var timer = setInterval(addDataFromUrl.bind(null,url),5000);   
 }
 
 function button_click() {
-url=document.getElementById("input_url").value;
- run(url)
+  url=document.getElementById("input_url").value;
+  run(url)
 }
+
+// fill table with data from JSON
 function addToTable(json) {
   var data = JSON.parse(json);
   var table = document.getElementById("table_result");
