@@ -29,7 +29,6 @@ defmodule LatencyWeb.PageController do
 
   """
   def check_response(conn,params) do
-    status=0
     url=params["url"]
     time_now=DateTime.utc_now
     start_ms = System.monotonic_time(:milliseconds)
