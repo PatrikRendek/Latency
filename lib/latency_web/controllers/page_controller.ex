@@ -30,7 +30,7 @@ defmodule LatencyWeb.PageController do
   """
   def check_response(conn,params) do
     url=params["url"]
-    time_now=DateTime.utc_now
+    time_now=DateTime.utc_now() |> DateTime.add(7200, :second)
     start_ms = System.monotonic_time(:milliseconds)
     # do the request and receive response
     status=get_response_code(url)
